@@ -197,7 +197,8 @@ dependencies {
     // When using the BoM, don't specify versions in Firebase dependencies
 
     implementation 'com.google.firebase:firebase-analytics'
-
+    
+    compile project(':react-native-image-crop-picker')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

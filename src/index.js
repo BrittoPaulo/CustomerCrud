@@ -1,19 +1,16 @@
-import React from 'react';
-import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
+import React, {useEffect} from 'react';
+import {StatusBar} from 'react-native';
 import Routes from './routes';
+import SplashScreen from 'react-native-splash-screen';
 
 export default function App() {
-  return <Routes />;
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+  return (
+    <>
+      <StatusBar backgroundColor="#00843d" />
+      <Routes />
+    </>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 28,
-  },
-});
