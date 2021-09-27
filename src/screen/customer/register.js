@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -8,9 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
   Modal,
-  Pressable,
 } from 'react-native';
-import {useState} from 'react/cjs/react.development';
 import PhotoCircle from '../../components/photoCircle';
 import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
@@ -127,7 +125,7 @@ const Edit = ({route, navigation}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.textStyle}>Essa Operação é irreversível!</Text>
+            <Text style={styles.textStyle}>Essa operação é irreversível!</Text>
             <Text style={styles.subTextStyle}>Deseja continuar?</Text>
             <View style={styles.buttons}>
               <CustomButton
@@ -248,7 +246,7 @@ const Edit = ({route, navigation}) => {
                   <CustomButton
                     onPress={() => setModalVisible(true)}
                     style={[styles.button, {backgroundColor: 'red'}]}
-                    buttonTitle={'deletar'}
+                    buttonTitle={'Deletar'}
                     color={'red'}
                     textColor={'#fff'}
                     selected={true}

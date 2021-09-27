@@ -40,7 +40,7 @@ const Customer = ({navigation}) => {
             _data.sort((a, b) => {
               return b.id - a.id;
             });
-            setMaxIndex(_data[_data.length - 1].id);
+            setMaxIndex(_data[0].id);
           }
           setData(_data);
           setDataSearch(_data);
@@ -96,9 +96,7 @@ const Customer = ({navigation}) => {
       )}
       {!loading && !dataSearch.length && !searchTerm ? (
         <View style={styles.containerEmpty}>
-          <Text style={styles.titleEmpty}>
-            Nenhum cliente cadastrado. Deseja cadastrar?
-          </Text>
+          <Text style={styles.titleEmpty}>Nenhum cliente cadastrado.</Text>
           <CustomButton
             onPress={() =>
               navigation.navigate('register', {maxIndex: maxIndex})
@@ -175,10 +173,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
   },
   titleEmpty: {
-    fontSize: 17,
+    fontSize: 20,
     lineHeight: 20,
     textAlign: 'center',
     color: '#303030',
+    fontWeight: 'bold',
   },
   TextInputStyleClass: {
     textAlign: 'left',
