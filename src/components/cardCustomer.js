@@ -9,7 +9,12 @@ const Card = ({item, navigation}) => {
     <View style={[styles.container]}>
       <TouchableWithoutFeedback
         onPress={() => {
-          navigation.navigate('register', {id: item.id});
+          navigation.navigate('register', {
+            ...item,
+            birthDate: moment(item.birthDate, 'DD/MM/YYYY').format(
+              'DD/MM/YYYY',
+            ),
+          });
         }}>
         <View style={styles.column}>
           <View style={styles.row}>
@@ -22,7 +27,7 @@ const Card = ({item, navigation}) => {
             </View>
             <View style={styles.date}>
               <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.info}>{`codigo: ${item.id}`}</Text>
+              <Text style={styles.info}>{`código: ${item.id}`}</Text>
               <Text style={styles.info}>{`aniversário: ${birthDate}`}</Text>
             </View>
           </View>

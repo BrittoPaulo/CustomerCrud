@@ -18,9 +18,11 @@ import CustomButton from '../../components/customButton';
 const Customer = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [maxIndex, setMaxIndex] = useState(0);
   const [dataSearch, setDataSearch] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   useEffect(() => {
+    setLoading(true);
     const unsubscribeCustomerListener = firestore()
       .collection('customers')
       .onSnapshot(
@@ -32,10 +34,17 @@ const Customer = ({navigation}) => {
           }
           let _data = [];
           querySnapshot.docs.forEach(elem => {
-            _data = [..._data, elem.data()];
+            _data = [..._data, {...elem.data(), refId: elem.id}];
           });
+          if (_data.length) {
+            _data.sort((a, b) => {
+              return b.id - a.id;
+            });
+            setMaxIndex(_data[_data.length - 1].id);
+          }
           setData(_data);
           setDataSearch(_data);
+          setLoading(false);
         },
         e => {
           setDataSearch([]);
@@ -81,7 +90,7 @@ const Customer = ({navigation}) => {
   return (
     <SafeAreaView styles={styles.container}>
       {loading && (
-        <View style={styles.flex}>
+        <View style={styles.center}>
           <ActivityIndicator size={60} color={'#00843d'} />
         </View>
       )}
@@ -91,7 +100,9 @@ const Customer = ({navigation}) => {
             Nenhum cliente cadastrado. Deseja cadastrar?
           </Text>
           <CustomButton
-            onPress={() => navigation.navigate('register')}
+            onPress={() =>
+              navigation.navigate('register', {maxIndex: maxIndex})
+            }
             style={styles.button}
             buttonTitle={'Cadastrar Cliente'}
             color={'#00843d'}
@@ -112,7 +123,7 @@ const Customer = ({navigation}) => {
             />
             <TouchableWithoutFeedback
               onPress={() => {
-                navigation.navigate('register');
+                navigation.navigate('register', {maxIndex: maxIndex});
               }}>
               <FastImage
                 style={[styles.photo]}
@@ -122,7 +133,7 @@ const Customer = ({navigation}) => {
               />
             </TouchableWithoutFeedback>
           </View>
-          <View>
+          <View style={{height: height - 150}}>
             {searchTerm && !dataSearch.length ? (
               <Empty />
             ) : (
@@ -131,7 +142,7 @@ const Customer = ({navigation}) => {
                 renderItem={event => (
                   <Card navigation={navigation} item={event.item} />
                 )}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.refId}
               />
             )}
           </View>
@@ -146,7 +157,7 @@ const styles = StyleSheet.create({
     flex: 1,
     top: 0,
   },
-  flex: {
+  center: {
     top: height / 2 - 50,
   },
   containerEmpty: {

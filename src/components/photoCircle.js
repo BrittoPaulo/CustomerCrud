@@ -31,8 +31,8 @@ const PhotoCircle = ({photoURL, photoStyle, style}) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
