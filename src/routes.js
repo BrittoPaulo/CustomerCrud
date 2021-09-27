@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Customer from './screen/customer';
-import Edit from './screen/customer/edit';
+import register from './screen/customer/register';
 
 const Stack = createStackNavigator();
 
@@ -15,7 +15,7 @@ function AppScreen() {
       screenOptions={{
         headerTintColor: '#FFF',
         headerStyle: styles.headerStyle,
-        cardStyle: {backgroundColor: '#F3F5F5'},
+        cardStyle: {backgroundColor: '#F3F5F5', opacity: 1},
       }}>
       <Stack.Screen
         name="client"
@@ -24,8 +24,13 @@ function AppScreen() {
         }}
         component={Customer}
       />
-      <Stack.Screen name="register" component={Customer} />
-      <Stack.Screen name="edit" component={Edit} />
+      <Stack.Screen
+        options={({route}) => ({
+          title: route.params?.id ? 'Editar cliente' : 'Cadastrar cliente',
+        })}
+        name="register"
+        component={register}
+      />
     </Stack.Navigator>
   );
 }
